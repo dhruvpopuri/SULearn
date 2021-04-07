@@ -7,6 +7,7 @@ from users.models import *
 from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView,DeleteView
 from taggit.models import Tag
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -21,6 +22,10 @@ def creators(request):
 
 @login_required
 def CreateCourse(request):
+	
+
+
+
 	if request.method == "POST":
 		form = CourseCreateForm(request.POST)
 
@@ -30,6 +35,18 @@ def CreateCourse(request):
 			newcourse.slug = slugify(newcourse.name)
 			newcourse.save()
 			form.save_m2m()
+			creator = newcourse.created_by
+			followers = creator.creatorprofile.followers.all()
+			email_ids = []
+			for follower in followers:
+				email_ids.append(follower.userr.email)
+
+			send_mail('Update!',f'A new course has just been uploaded by {creator}','learnerupdate16@gmail.com',
+
+				email_ids)
+			
+
+
 			return redirect(reverse('course_details',kwargs={'slug':newcourse.slug}))
 
 

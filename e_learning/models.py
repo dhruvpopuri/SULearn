@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from taggit.managers import TaggableManager
+from taggit.managers import TaggableManager 
 from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 

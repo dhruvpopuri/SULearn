@@ -1,3 +1,4 @@
 db.sqlite3
 .env
 SecretKey.txt
+SU_Learn/secrets.py
