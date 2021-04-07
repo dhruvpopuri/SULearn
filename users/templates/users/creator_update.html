@@ -34,11 +34,11 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="http://127.0.0.1:8000/creators/">SU-<span>Learn</span></a>
+        <a class="navbar-brand">SU-<span>Learn</span></a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Courses</a></li>
+          <li><a href="{% url 'courses' %}">Courses</a></li>
           {% if user in creatorprofiles %}
             <li><a href="{% url 'mycourses' %}">My courses</a></li>
           {% endif %}

@@ -293,6 +293,16 @@ def search(request):
 		data = request.POST.get('search')
 		post_names = Courses.objects.filter(name__contains=data)
 		post_tags = Courses.objects.filter(tags__name__contains=data)
+		sep_post_tags = []
+
+		for course in post_tags:
+			if course not in post_names:
+				sep_post_tags.append(course)
+
+
+		sep_tags = sep_post_tags
+
+
 		user = request.user
 		creatorprofiles = CreatorProfile.objects.all()
 
@@ -302,6 +312,7 @@ def search(request):
 		'post_tags':post_tags,
 		'user':user,
 		'creatorprofiles':creatorprofiles,
+		'sep_tags':sep_tags
 		}
 
 		return render(request,'e_learning/search_results.html',context)
