@@ -1,0 +1,155 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SU Learn</title>
+  <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com">
+  <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans|Candal|Alegreya+Sans">
+  <link rel="stylesheet" type="text/css" href="{% static 'e_learning/css/font-awesome.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'e_learning/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'e_learning/css/imagehover.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'e_learning/css/style.css' %}">
+  <!-- =======================================================
+    Theme Name: Mentor
+    Theme URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+    Author: BootstrapMade.com
+    Author URL: https://bootstrapmade.com
+  ======================================================= -->
+</head>
+
+<body>
+  <!--Navigation bar-->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://127.0.0.1:8000/creators/">SU-<span>Learn</span></a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <form method="post" action="{% url 'search' %}">
+            {% csrf_token %}
+            <input placeholder="Search..." name="search">
+            <button type="submit">Search</button>
+          </form>
+          <li><a href="{% url 'courses' %}">All Courses</a></li>
+          <li><a href="{% url 'CreateCourse' %}">Create a Course</a></li>
+          <li><a href="http://127.0.0.1:8000/accounts/logout">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!--/ Navigation bar-->
+  <!--Banner-->
+  <div class="banner">
+    <div class="bg-color">
+      <div class="container">
+        <div class="row">
+          <div class="banner-text text-center">
+            <div class="text-border">
+              <h2 class="text-dec">SU-Learn</h2>
+            </div>
+            <div class="intro-para text-center quote">
+              <p class="big-text">Learning Today<br />Leading Tomorrow.</p>
+              <p class="small-text">A Student Union Initiative</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Banner-->
+  <!--Faculity member-->
+  <section id="faculity-member" class="section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="header-section text-center">
+          <h2>My Profile</h2>
+          <hr class="bottom-line">
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="pm-staff-profile-container">
+            <div class="pm-staff-profile-image-wrapper text-center">
+              {% if prof_pic %}
+                <div>
+                  <img src="{{ prof_pic.url }}" alt="" />
+                </div>
+              {% else %}
+
+                <div>
+                  <img src="{{ img_url }}" alt="" />
+                </div>
+              {% endif %}
+            </div>
+            <div class="pm-staff-profile-details text-center">
+              <p class="pm-staff-profile-name">{{ name }}</p>
+
+              <p class="pm-staff-profile-bio">{{ bio }}</p>
+            </div>
+          </div>
+        </div>
+        <h3><b>DOB</b> : {{ DOB }}</h3>
+        <h3><b>City</b> : {{ city }}</h3>
+        <h3><b> State</b>: {{ state }}</h3>
+        <h3><b> Date of Joining</b>: {{ date_of_joining }}
+        <h3> <b>Educational Qualifications</b>: {{ educational_qualifications }} </h3>
+        <h3><b>Email</b>:{{ email }}</h3>
+        <h3><b>User Rating</b>:{{ user_rating }}</h3>
+        <br />
+        <button><a href="{% url 'creator_update' %}">UPDATE PROFILE</a></button>
+        <br /><br /><br />
+        <h2>My Courses</h2>
+        {% for course in courses %}
+          <h3><a href="{% url 'course_details' course.slug %}">{{ course.name }}</a></h3>
+          <small>Rating:{{ course.rating }}</small>
+        {% endfor %}
+      </div>
+      <h3>Followers:{{ follower_count }}</h3>
+    </div>
+  </section>
+  <!--/ Faculity member-->
+  <!--Footer-->
+  <footer id="footer" class="footer">
+    <div class="container text-center">
+
+
+       <ul class="social-links">
+        <li><a href="#link"><i class="fa fa-twitter fa-fw"></i></a></li>
+        <li><a href="#link"><i class="fa fa-facebook fa-fw"></i></a></li>
+        <li><a href="#link"><i class="fa fa-google-plus fa-fw"></i></a></li>
+        <li><a href="#link"><i class="fa fa-dribbble fa-fw"></i></a></li>
+        <li><a href="#link"><i class="fa fa-linkedin fa-fw"></i></a></li>
+      </ul>
+      ©2016 Mentor Theme. All rights reserved
+      <div class="credits">
+        <!--
+          All the links in the footer should remain intact.
+          You can delete the links only if you purchased the pro version.
+          Licensing information: https://bootstrapmade.com/license/
+          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Mentor
+        -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade.com</a>
+      </div>
+    </div>
+  </footer>
+  <!--/ Footer-->
+
+  <script src="{% static 'e_learning/js/jquery.min.js' %}"></script>
+  <script src="{% static 'e_learning/js/jquery.easing.min.js' %}"></script>
+  <script src="{% static 'e_learning/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'e_learning/js/custom.js' %}"></script>
+  <script src="{% static 'e_learning/contactform/contactform.js' %}"></script>
+
+</body>
+
+</html>
