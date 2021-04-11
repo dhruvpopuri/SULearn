@@ -84,7 +84,7 @@ jupyter-console
 jupyter-core==4.6.3
 jupyterlab==2.2.6
 jupyterlab-pygments 
-jupyterlab-server==1.9 
+jupyterlab-server==1.1.5
 keyring 
 kiwisolver 
 lazy-object-proxy==1.4.3
