@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-from .secrets import host_password,secret_key
+from .secrets import host_password,secret_key,client_id,oauth_key
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,9 +25,9 @@ SECRET_KEY = secret_key
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.pythonanywhere.com']
 
 
 # Application definition
@@ -61,9 +61,15 @@ SOCIALACCOUNT_PROVIDERS = {
         'SCOPE': [
             'profile',
             'email',
-        ]
+        ],
+        'APP': {
+            'client_id': client_id,
+            'secret': oauth_key,
+            'key': ''
+        }
     }
 }
+    
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -167,3 +173,10 @@ EMAIL_HOST_USER = 'learnerupdate16@gmail.com'
 EMAIL_HOST_PASSWORD = host_password
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True

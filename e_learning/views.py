@@ -273,7 +273,7 @@ def courses(request):
 	user = request.user
 	learnerprofile = LearnerProfile.objects.all()
 	creatorprofiles = CreatorProfile.objects.all()
-	common_tags = Courses.tags.most_common()[:4]
+	common_tags = Courses.tags.most_common()[:5]
 
 	if user in creatorprofiles:
 		testx = True
