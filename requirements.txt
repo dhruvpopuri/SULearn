@@ -60,7 +60,7 @@ greenlet
 h5py==2.10.0
 HeapDict==1.0.1
 html5lib 
-idna 
+idna==2.8
 imageio 
 imagesize==1.2.0
 importlib-metadata 
@@ -73,7 +73,7 @@ ipywidgets
 isort 
 itsdangerous==1.1.0
 jdcal==1.4.1
-jedi 
+jedi==0.17.2 
 Jinja2==2.11.2
 joblib 
 json5==0.9.5
@@ -84,7 +84,7 @@ jupyter-console
 jupyter-core==4.6.3
 jupyterlab==2.2.6
 jupyterlab-pygments 
-jupyterlab-server 
+jupyterlab-server==1.9 
 keyring 
 kiwisolver 
 lazy-object-proxy==1.4.3
@@ -114,7 +114,7 @@ packaging==20.4
 pandas 
 pandocfilters 
 paramiko 
-parso==0.7.0
+parso==0.8.0
 partd==1.1.0
 path 
 pathlib2==2.3.5
@@ -130,12 +130,12 @@ ply==3.11
 prompt-toolkit 
 psutil 
 py 
-pycodestyle==2.6.0
+pycodestyle==2.7.0
 pycosat==0.6.3
 pycparser 
 pycurl==7.43.0.6
 pydocstyle 
-pyflakes==2.2.0
+pyflakes==2.3.0
 Pygments 
 PyJWT==2.0.1
 pylint
@@ -155,7 +155,7 @@ python3-openid==3.2.0
 pytz==2020.1
 PyYAML==5.3.1
 pyzmq==19.0.2
-QDarkStyle==2.8.1
+QDarkStyle==3.0.2
 QtAwesome 
 qtconsole 
 QtPy==1.9.0
@@ -198,14 +198,14 @@ threadpoolctl
 tifffile==2020.10.1
 toml 
 toolz 
-tornado==6.0.4
+tornado==6.1
 tqdm 
 traitlets 
 typing-extensions 
 ujson 
 unicodecsv==0.14.1
 urllib3 
-watchdog 
+watchdog==0.10.3 
 wcwidth 
 webencodings==0.5.1
 Werkzeug==1.0.1
