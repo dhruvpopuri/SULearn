@@ -140,7 +140,7 @@ Pygments
 PyJWT==2.0.1
 pylint
 PyNaCl 
-pyodbc===4.0.0-unsupported
+
 pyOpenSSL 
 pyparsing==2.4.7
 pyreadline==2.1
