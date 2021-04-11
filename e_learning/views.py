@@ -12,7 +12,11 @@ from django.core.mail import send_mail
 # Create your views here.
 
 def home(request):
-	return render(request,'e_learning/index.html')
+	user = request.user
+	if user.is_authenticated():
+		return render(reverse('profile'))
+	else:
+		return render(request,'e_learning/index.html')
 
 
 
@@ -39,7 +43,7 @@ def CreateCourse(request):
 			followers = creator.creatorprofile.followers.all()
 			email_ids = []
 			for follower in followers:
-				email_ids.append(follower.userr.email)
+				email_ids.append(follower.creatorprofile.email)
 
 			send_mail('Update!',f'A new course has just been uploaded by {creator}','learnerupdate16@gmail.com',
 
@@ -202,12 +206,18 @@ def course_dets(request,slug):
 		test2 = False
 
 
+	if request.user in CreatorProfile.objects.all():
+		test3 = True
+	else:
+		test3 = False
+
+
 	creator_followers = creator.creatorprofile.followers.all()
 	user = request.user
 
 
 
-
+ 
 
 	context = {
 	'course':course,
@@ -219,7 +229,8 @@ def course_dets(request,slug):
 	'test':test,
 	'creator_followers':creator_followers,
 	'test2':test2,
-	'user':user
+	'user':user,
+	'test3':test3,
 	}
 
 	return render(request,'e_learning/course_dets.html',context)
