@@ -31,10 +31,6 @@ click==7.1.2
 cloudpickle
 colorama
 comtypes==1.1.7
-conda==4.9.2
-conda-build==3.20.5
-conda-package-handling 
-conda-verify==3.4.2
 contextlib2==0.6.0.post1
 cryptography==3.4.7
 cycler==0.10.0
