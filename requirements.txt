@@ -172,13 +172,10 @@ Send2Trash==1.5.0
 sendgrid==6.6.0
 simplegeneric==0.8.1
 singledispatch 
-sip==4.19.13
-six 
 snowballstemmer==2.0.0
 sortedcollections==1.2.1
 sortedcontainers==2.2.2
 soupsieve==2.0.1
-Sphinx
 sphinxcontrib-applehelp==1.0.2
 sphinxcontrib-devhelp==1.0.2
 sphinxcontrib-htmlhelp==1.0.3
