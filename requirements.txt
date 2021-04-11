@@ -214,3 +214,4 @@ wrapt==1.11.2
 xlrd==1.2.0
 XlsxWriter 
 zict==2.0.0
+django_heroku
