@@ -181,8 +181,6 @@ sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.4
 sphinxcontrib-websupport 
-spyder 
-spyder-kernels 
 SQLAlchemy
 sqlparse==0.4.1
 starkbank-ecdsa==1.1.0
@@ -215,6 +213,3 @@ wrapt==1.11.2
 xlrd==1.2.0
 XlsxWriter 
 zict==2.0.0
-zipp 
-zope.event==4.5.0
-zope.interface 
