@@ -16,7 +16,7 @@ def home(request):
 	if user.is_authenticated:
 		return redirect(reverse('profile'))
 	else:
-		return redirect(request,'e_learning/index.html')
+		return render(request,'e_learning/index.html')
 
 
 
