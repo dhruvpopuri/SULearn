@@ -72,8 +72,7 @@ ipython-genutils==0.2.0
 ipywidgets 
 isort 
 itsdangerous==1.1.0
-jdcal==1.4.1
-jedi==0.17.2 
+jdcal==1.4.1 
 Jinja2==2.11.2
 joblib 
 json5==0.9.5
@@ -114,7 +113,7 @@ packaging==20.4
 pandas 
 pandocfilters 
 paramiko 
-parso==0.8.0
+parso==0.7.0
 partd==1.1.0
 path 
 pathlib2==2.3.5
