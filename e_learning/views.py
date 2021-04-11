@@ -43,7 +43,7 @@ def CreateCourse(request):
 			followers = creator.creatorprofile.followers.all()
 			email_ids = []
 			for follower in followers:
-				email_ids.append(follower.creatorprofile.email)
+				email_ids.append(follower.learnerprofile.email)
 
 			send_mail('Update!',f'A new course has just been uploaded by {creator}','learnerupdate16@gmail.com',
 
