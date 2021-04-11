@@ -11,7 +11,7 @@ from PIL import Image
 
 class LearnerProfile(models.Model):
 	name = models.CharField(max_length=150)
-	user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='userr',null=True)
+	user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
 	username = models.CharField(max_length=150,default='user1')
 	email = models.EmailField(null=True)
 	dob = models.DateTimeField(null=True)

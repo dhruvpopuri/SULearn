@@ -168,7 +168,7 @@ def course_dets(request,slug):
 	#RESTRICTING CREATE MODULE TO THE CREATOR
 
 	reviews = course.reviews_set.all()
-	author_list = []
+	author_list = []  
 	if request.user == course.created_by:
 		test = True
 	else:
@@ -189,10 +189,10 @@ def course_dets(request,slug):
 		user = request.user
 		if user not in creator.creatorprofile.followers.all():
 			creator.creatorprofile.followers.add(user)
-			user.userr.following.add(creator)
+			user.learnerprofile.following.add(creator)
 		elif user in creator.creatorprofile.followers.all():
 			creator.creatorprofile.followers.remove(user)
-			user.userr.following.remove(creator)
+			user.learnerprofile.following.remove(creator)
 
 
 	#Making it such that Creators dont see enroll button 
