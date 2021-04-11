@@ -14,9 +14,9 @@ from django.core.mail import send_mail
 def home(request):
 	user = request.user
 	if user.is_authenticated:
-		return render(reverse('profile'))
+		return redirect(reverse('profile'))
 	else:
-		return render(request,'e_learning/index.html')
+		return redirect(request,'e_learning/index.html')
 
 
 
