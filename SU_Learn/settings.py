@@ -108,8 +108,8 @@ WSGI_APPLICATION = 'SU_Learn.wsgi.application'
 
 
 STATICFILES_DIRS = [
-    BASE_DIR /'e_learning'/ "static",
-    BASE_DIR /'users'/ "static",
+    os.path.join(BASE_DIR, 'static'),
+
 
 ]
 
@@ -187,4 +187,3 @@ SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-django_heroku.settings(locals())
