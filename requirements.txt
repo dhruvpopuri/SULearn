@@ -153,7 +153,6 @@ python-jsonrpc-server
 python-language-server 
 python3-openid==3.2.0
 pytz==2020.1
-PyWavelets 
 pywin32==227
 pywin32-ctypes==0.2.0
 pywinpty==0.5.7
