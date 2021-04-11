@@ -108,7 +108,9 @@ WSGI_APPLICATION = 'SU_Learn.wsgi.application'
 
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR /e_learning/ "static",
+    BASE_DIR /users/ "static",
+
 ]
 
 
