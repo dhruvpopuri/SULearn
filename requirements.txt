@@ -146,7 +146,7 @@ pyparsing==2.4.7
 pyreadline==2.1
 pyrsistent
 PySocks==1.7.1
-pytest==0.0.0
+pytest==6.2.3
 python-dateutil==2.8.1
 python-http-client==3.3.2
 python-jsonrpc-server 
