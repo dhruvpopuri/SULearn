@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 from .secrets import host_password,secret_key,client_id,oauth_key
+import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -183,3 +184,5 @@ SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+django_heroku.settings(locals())
