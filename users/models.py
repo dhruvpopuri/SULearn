@@ -14,7 +14,7 @@ class LearnerProfile(models.Model):
 	user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
 	username = models.CharField(max_length=150,default='user1')
 	email = models.EmailField(null=True)
-	dob = models.DateTimeField(null=True)
+	dob = models.DateTimeField()
 	city = models.CharField(max_length=150)
 	state = models.CharField(max_length=150)
 	date_of_joining = models.DateTimeField(default=timezone.now)
