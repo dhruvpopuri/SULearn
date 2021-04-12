@@ -28,7 +28,7 @@ class CreatorProfileUpdateForm(forms.ModelForm):
 
 	class Meta:
 		model = CreatorProfile
-		fields = ['bio','city','state','educational_qualifications']
+		fields = ['bio','city','state','educational_qualifications','prof_pic']
 
 
 class LearnerUserUpdateForm(forms.ModelForm):
@@ -42,7 +42,7 @@ class LearnerProfileUpdateForm(forms.ModelForm):
 
 	class Meta:
 		model = CreatorProfile
-		fields = ['bio','city','state']
+		fields = ['bio','city','state','prof_pic']
 
 
 
