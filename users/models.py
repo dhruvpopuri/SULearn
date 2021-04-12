@@ -66,16 +66,16 @@ class CreatorProfile(models.Model):
 
 
 
-if prof_pic is None:
+	if prof_pic is None:
 
-	def save(self,*args,**kwargs):
-		super().save(*args,**kwargs)
-		img = Image.open(self.prof_pic.path)
+		def save(self,*args,**kwargs):
+			super().save(*args,**kwargs)
+			img = Image.open(self.prof_pic.path)
 
-		if img.height > 300 or img.width > 300:
-			output_size = (300, 300)
-			img.thumbnail(output_size)
-			img.save(self.prof_pic.path)
+			if img.height > 300 or img.width > 300:
+				output_size = (300, 300)
+				img.thumbnail(output_size)
+				img.save(self.prof_pic.path)
 
 
 
