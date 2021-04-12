@@ -35,8 +35,8 @@ class LearnerProfile(models.Model):
 			self.save()
 
 	if prof_pic is not None:
-		def save(self):
-			super().save()
+		def save(self,*args,**kwargs):
+			super().save(*args,**kwargs)
 			img = Image.open(self.prof_pic.path)
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
@@ -76,10 +76,14 @@ class CreatorProfile(models.Model):
         			)
 				self.save()
 
+		def save(self,*args,**kwargs):
+			super().save(*args,**kwargs)
+
+
 
 	else:	
-		def save(self):
-			super().save()
+		def save(self,*args,**kwargs):
+			super().save(*args,**kwargs)
 			img = Image.open(self.prof_pic.path)
 
 			if img.height > 300 or img.width > 300:
