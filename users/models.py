@@ -63,34 +63,19 @@ class CreatorProfile(models.Model):
 	prof_pic = models.ImageField(upload_to='prof_pics')
 	bio = models.CharField(max_length=180,default='Welcome to SU-Learn')
 	followers = models.ManyToManyField(User,related_name="followers")
-	image_url = models.URLField(null=True)
-
-
-	if prof_pic is None or prof_pic.url == image_url:		
-		def get_remote_image(self):
-			if self.image_url and not self.prof_pic:
-
-				result = urllib.urlretrieve(self.image_url)
-				self.prof_pic.save(
-        			os.path.basename(self.image_url),
-        			File(open(result[0]))
-        			)
-				self.save()
-
-		def save(self,*args,**kwargs):
-			super().save(*args,**kwargs)
 
 
 
-	elif prof_pic.url != image_url:	
-		def save(self,*args,**kwargs):
-			super().save(*args,**kwargs)
-			img = Image.open(self.prof_pic.path)
+if prof_pic is None:
 
-			if img.height > 300 or img.width > 300:
-				output_size = (300, 300)
-				img.thumbnail(output_size)
-				img.save(self.prof_pic.path)
+	def save(self,*args,**kwargs):
+		super().save(*args,**kwargs)
+		img = Image.open(self.prof_pic.path)
+
+		if img.height > 300 or img.width > 300:
+			output_size = (300, 300)
+			img.thumbnail(output_size)
+			img.save(self.prof_pic.path)
 
 
 

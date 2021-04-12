@@ -112,8 +112,6 @@ def profile(request):
 
 		social_account = SocialAccount.objects.get(user=user)
 		img_url = social_account.extra_data['picture']
-		profile.image_url = img_url
-		profile.save()
 		#Courses created by this creator
 		courses = user.created_by_set.all()
 		#Creator Rating
