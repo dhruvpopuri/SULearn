@@ -31,8 +31,8 @@ def profile(request):
 		profile = LearnerProfile.objects.get(user=user)
 		name = profile.name
 		DOB = profile.dob
-		dob_l = DOB.split(' ')
-		dob = dob_k[0]
+		dob_l = DOB.split(',')
+		dob = dob_k[:2]
 		city = profile.city
 		state = profile.state
 		date_of_joining = profile.date_of_joining
