@@ -36,15 +36,14 @@ class LearnerProfile(models.Model):
 	
 
 
-		if prof_pic is not None:	
-			def save(self):
-				super().save()
-				img = Image.open(self.prof_pic.path)
-
-				if img.height > 300 or img.width > 300:
-					output_size = (300, 300)
-					img.thumbnail(output_size)
-					img.save(self.prof_pic.path)
+	if prof_pic is not None:	
+		def save(self):
+			super().save()
+			img = Image.open(self.prof_pic.path)
+			if img.height > 300 or img.width > 300:
+				output_size = (300, 300)
+				img.thumbnail(output_size)
+				img.save(self.prof_pic.path)
 
 
 	def get_absolute_url(self):
@@ -80,15 +79,15 @@ class CreatorProfile(models.Model):
 	
 
 
-		if prof_pic is not None:	
-			def save(self):
-				super().save()
-				img = Image.open(self.prof_pic.path)
+	if prof_pic is not None:	
+		def save(self):
+			super().save()
+			img = Image.open(self.prof_pic.path)
 
-				if img.height > 300 or img.width > 300:
-					output_size = (300, 300)
-					img.thumbnail(output_size)
-					img.save(self.prof_pic.path)
+			if img.height > 300 or img.width > 300:
+				output_size = (300, 300)
+				img.thumbnail(output_size)
+				img.save(self.prof_pic.path)
 
 
 
