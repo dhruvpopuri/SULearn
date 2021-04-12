@@ -65,18 +65,19 @@ class CreatorProfile(models.Model):
 	followers = models.ManyToManyField(User,related_name="followers")
 
 
-	def get_remote_image(self):
-		if self.image_url and not self.prof_pic:
+	if prof_pic is None:		
+		def get_remote_image(self):
+			if self.image_url and not self.prof_pic:
 
-			result = urllib.urlretrieve(self.image_url)
-			self.prof_pic.save(
-        		os.path.basename(self.image_url),
-        		File(open(result[0]))
-        		)
-			self.save()
+				result = urllib.urlretrieve(self.image_url)
+				self.prof_pic.save(
+        			os.path.basename(self.image_url),
+        			File(open(result[0]))
+        			)
+				self.save()
 
 
-	if prof_pic is not None:	
+	elif prof_pic is not None:	
 		def save(self):
 			super().save()
 			img = Image.open(self.prof_pic.path)
