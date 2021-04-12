@@ -67,7 +67,7 @@ def profile(request):
 					course.save()
 
 		#Following
-		following_count = user.userr.following.count()
+		following_count = user.learnerprofile.following.count()
 
 		email = profile.email
 		
