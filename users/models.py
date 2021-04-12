@@ -66,7 +66,7 @@ class CreatorProfile(models.Model):
 
 
 
-	if prof_pic.objects.count() != 0 :
+	if prof_pic:
 
 		def save(self,*args,**kwargs):
 			super().save(*args,**kwargs)
