@@ -32,7 +32,7 @@ def profile(request):
 		name = profile.name
 		DOB = profile.dob
 		dob = DOB.date()
-		city = profile.city
+		city = profile.city 
 		state = profile.state
 		date_of_joining = profile.date_of_joining
 		prof_pic = profile.prof_pic
