@@ -34,14 +34,14 @@ class LearnerProfile(models.Model):
         			)
 				self.save()
 
-	else:
-		def save(self,*args,**kwargs):
-			super().save(*args,**kwargs)
-			img = Image.open(self.prof_pic.path)
-			if img.height > 300 or img.width > 300:
-				output_size = (300, 300)
-				img.thumbnail(output_size)
-				img.save(self.prof_pic.path)
+		if prof_pic is not None:
+			def save(self,*args,**kwargs):
+				super().save(*args,**kwargs)
+				img = Image.open(self.prof_pic.path)
+				if img.height > 300 or img.width > 300:
+					output_size = (300, 300)
+					img.thumbnail(output_size)
+					img.save(self.prof_pic.path)
 
 
 	def get_absolute_url(self):
@@ -54,7 +54,7 @@ class CreatorProfile(models.Model):
 	username = models.CharField(max_length=150,default='user1')
 	user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
 	email = models.EmailField(null=True)
-	dob = models.DateField(null=True)
+	dob = models.DateTimeField(null=True)
 	city = models.CharField(max_length=150)
 	state = models.CharField(max_length=150)
 	date_of_joining = models.DateTimeField(default=timezone.now)
@@ -63,6 +63,8 @@ class CreatorProfile(models.Model):
 	prof_pic = models.ImageField(upload_to='prof_pics')
 	bio = models.CharField(max_length=180,default='Welcome to SU-Learn')
 	followers = models.ManyToManyField(User,related_name="followers")
+
+
 
 
 
