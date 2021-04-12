@@ -79,7 +79,8 @@
             {% for video in videos %}
               <h2>{{ video.name }}</h2>
               <video controls>
-                <source  src="{{ video.videos.url }}" type="video">
+                <source  src="{{ video.videos.url }}" type="video/mp4"> 
+                <source  src="{{ video.videos.url }}" type="video/mov">             
               </video>
 
             {% endfor %}
