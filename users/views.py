@@ -109,6 +109,7 @@ def profile(request):
 		prof_pic = profile.prof_pic
 		bio = profile.bio
 		#To get default profile pic
+
 		social_account = SocialAccount.objects.get(user=user)
 		img_url = social_account.extra_data['picture']
 		profile.image_url = img_url

@@ -32,7 +32,7 @@ class LearnerProfile(models.Model):
         		os.path.basename(self.image_url),
         		File(open(result[0]))
         		)
-			self.save()\
+			self.save()
 
 	if prof_pic is not None:
 		def save(self):
