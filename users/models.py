@@ -77,7 +77,7 @@ class CreatorProfile(models.Model):
 				self.save()
 
 
-	elif prof_pic is not None:	
+	else:	
 		def save(self):
 			super().save()
 			img = Image.open(self.prof_pic.path)
