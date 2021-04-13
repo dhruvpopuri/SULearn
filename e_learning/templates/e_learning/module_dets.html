@@ -80,7 +80,10 @@
               <h2>{{ video.name }}</h2>
               <video controls>
                 <source  src="{{ video.videos.url }}" type="video/mp4"> 
-                <source  src="{{ video.videos.url }}" type="video/mov">             
+                <source  src="{{ video.videos.url }}" type="video/mov">
+                <source  src="{{ video.videos.url }}" type="video/mkv">
+                <source  src="{{ video.videos.url }}" type="video/avi">
+                <source  src="{{ video.videos.url }}" type="video/flv">          
               </video>
 
             {% endfor %}
