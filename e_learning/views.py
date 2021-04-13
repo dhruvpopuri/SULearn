@@ -288,7 +288,7 @@ def courses(request):
 
 	#Special features for learners
 	if LearnerProfile.objects.filter(user=user).count() != 0:
-		users_following = user.learnerprofile.following.objects.all()
+		users_following = user.learnerprofile.following.all()
 		context={
 		'courses':courses,
 		'learnerprofile':learnerprofiles,
