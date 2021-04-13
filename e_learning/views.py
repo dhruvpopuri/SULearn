@@ -287,7 +287,7 @@ def courses(request):
 	common_tags = Courses.tags.most_common()[:5]
 
 	#Special features for learners
-	if user in LearnerProfile.user.all():
+	if user in LearnerProfile.user:
 		users_following = user.learnerprofile.following.objects.all()
 		context={
 		'courses':courses,
