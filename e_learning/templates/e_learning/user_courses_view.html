@@ -86,7 +86,7 @@
           <h2>Other Courses of Creators you Follow</h2>
           {% for user in users_following %}
             {% for course in user.created_by_set.objects.all %}
-              {% if user not in course.completed_by.all and not in course.taken_by.all %}
+              {% if user not in course.completed_by.all and user not in course.taken_by.all %}
                 <h2><a href="{% url 'course_details' course.slug %}"> {{ course.name }} </a></h2>
                 <small> CREATED BY: {{ course.created_by }}</small>
                 <p>{{ course.overview }}</p>
