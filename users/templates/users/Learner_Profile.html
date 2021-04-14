@@ -83,15 +83,15 @@
 
             </div>
             <div class="pm-staff-profile-details text-center">
-              <p class="pm-staff-profile-name">{{ name }}</p>
+              <p class="pm-staff-profile-name">{{ profile.name }}</p>
             </div>
           </div>
         </div>
-        <h3><b>DOB</b> : {{ DOB }}</h3>
-        <h3><b>City</b> : {{ city }}</h3>
-        <h3><b>State</b>: {{ state }}</h3>
-        <h3><b>Date of Joining</b>: {{ date_of_joining }}</h3>
-        <h3><b>E-mail</b>:{{ email }}</h3>
+        <h3><b>DOB</b> : {{ profile.dob }}</h3>
+        <h3><b>City</b> : {{ profile.city }}</h3>
+        <h3><b>State</b>: {{ profile.state }}</h3>
+        <h3><b>Date of Joining</b>: {{ profile.date_of_joining }}</h3>
+        <h3><b>E-mail</b>:{{ profile.email }}</h3>
         <button><a href="{% url 'learner_update' %}">Update</a></button>
         <br /><br />
         <h2>Courses Taken</h2>

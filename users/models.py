@@ -38,23 +38,22 @@ class LearnerProfile(models.Model):
 		return social_account.extra_data['picture']
 
 
-
-
-
-
 	def save(self,*args,**kwargs):
-				
+		print(self.prof_pic)
 		if self.prof_pic:
-			path = self.prof_pic.path
-			path_list = path.split('/')
-			pathq = path_list[2] + '/prof_pics/' + path_list[3]
-			true_path = 'SU_Learn/' + pathq
-			img = Image.open(true_path)
+			super().save(*args,**kwargs)
+			img = Image.open(self.prof_pic.path)
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
 				img.thumbnail(output_size)
-				img.save(true_path)			
+				img.save(self.prof_pic.path)
 		super().save(*args,**kwargs)
+
+
+
+
+
+
 
 
 	def get_absolute_url(self):
