@@ -5,6 +5,7 @@ from django.urls import reverse
 import os
 from django.core.files import File
 from PIL import Image
+from allauth.socialaccount.models import SocialAccount
 
 
 # Create your models here.
@@ -18,30 +19,35 @@ class LearnerProfile(models.Model):
 	city = models.CharField(max_length=150)
 	state = models.CharField(max_length=150)
 	date_of_joining = models.DateTimeField(default=timezone.now)
-	prof_pic = models.ImageField(upload_to='prof_pics')
-	image_url = models.URLField(null=True)
+	prof_pic = models.ImageField(upload_to='prof_pics',null=True,blank=True)
+	#image_url = models.URLField(null=True)
 	bio = models.CharField(max_length=180,default='Welcome to SU-Learn')
 	following = models.ManyToManyField(User,related_name="following")
 
-	if prof_pic is None:
-		def get_remote_image(self):
-			if self.image_url and not self.prof_pic:
 
-				result = urllib.urlretrieve(self.image_url)
-				self.prof_pic.save(
-        			os.path.basename(self.image_url),
-        			File(open(result[0]))
-        			)
-				self.save()
+	def get_image_url(self):
+		if self.prof_pic:
+			return self.prof_pic.url
 
-		if prof_pic is not None:
-			def save(self,*args,**kwargs):
-				super().save(*args,**kwargs)
-				img = Image.open(self.prof_pic.path)
-				if img.height > 300 or img.width > 300:
-					output_size = (300, 300)
-					img.thumbnail(output_size)
-					img.save(self.prof_pic.path)
+
+		social_account = SocialAccount.objects.get(user=self.user)
+
+		return social_account.extra_data['picture']
+
+
+
+
+
+
+	def save(self,*args,**kwargs):
+		print(self.prof_pic)
+		if self.prof_pic:
+			img = Image.open(self.prof_pic.path)
+			if img.height > 300 or img.width > 300:
+				output_size = (300, 300)
+				img.thumbnail(output_size)
+				img.save(self.prof_pic.path)
+		super().save(*args,**kwargs)
 
 
 	def get_absolute_url(self):
@@ -60,17 +66,34 @@ class CreatorProfile(models.Model):
 	date_of_joining = models.DateTimeField(default=timezone.now)
 	educational_qualifications = models.TextField()
 	rating = models.FloatField(default=0)
-	prof_pic = models.ImageField(upload_to='prof_pics')
+	prof_pic = models.ImageField(upload_to='prof_pics',null=True,blank=True)
 	bio = models.CharField(max_length=180,default='Welcome to SU-Learn')
 	followers = models.ManyToManyField(User,related_name="followers")
 
 
+	def get_image_url(self):
+		if self.prof_pic:
+			return self.prof_pic.url
+
+
+		social_account = SocialAccount.objects.get(user=self.user)
+
+		return social_account.extra_data['picture']
 
 
 
 
 
 
+	def save(self,*args,**kwargs):
+		print(self.prof_pic)
+		if self.prof_pic:
+			img = Image.open(self.prof_pic.path)
+			if img.height > 300 or img.width > 300:
+				output_size = (300, 300)
+				img.thumbnail(output_size)
+				img.save(self.prof_pic.path)
+		super().save(*args,**kwargs)
 
 
 

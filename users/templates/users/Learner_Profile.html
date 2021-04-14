@@ -75,16 +75,11 @@
         <div class="col-lg-4 col-md-4 col-sm-4">
           <div class="pm-staff-profile-container">
             <div class="pm-staff-profile-image-wrapper text-center">
-              {% if prof_pic %}
-                <div>
-                  <img src="{{ prof_pic.url }}" alt="" />
-                </div>
-              {% else %}
 
                 <div>
-                  <img src="{{ img_url }}" alt="" />
+                  <img src="{{ profile.get_image_url }}" alt="" />
                 </div>
-              {% endif %}
+
 
             </div>
             <div class="pm-staff-profile-details text-center">

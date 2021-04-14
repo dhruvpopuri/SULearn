@@ -39,11 +39,11 @@ def profile(request):
 		bio = profile.bio
 		#To get default picture
 		social_account = SocialAccount.objects.get(user=user)
-		img_url = social_account.extra_data['picture']
+		#img_url = social_account.extra_data['picture']
 		email = social_account.extra_data['email']
 		profile.email = email
-		profile.image_url = img_url
 		profile.save()
+
 		#Courses taken
 
 		courses_taken = user.courses_set.all()
@@ -80,7 +80,7 @@ def profile(request):
 		'state':state,
 		'date_of_joining':date_of_joining,
 		'email':email,
-		'img_url':img_url,
+		#'img_url':img_url,
 		'prof_pic':prof_pic,
 		'bio':bio,
 		'courses':courses_taken,
