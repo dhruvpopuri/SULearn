@@ -43,13 +43,17 @@ class LearnerProfile(models.Model):
 
 
 	def save(self,*args,**kwargs):
-		print(self.prof_pic)		
+				
 		if self.prof_pic:
-			img = Image.open(MEDIA_ROOT + self.prof_pic.path)
+			path = self.prof_pic.path
+			path_list = path.split('/')
+			pathq = path_list[3:]
+			true_path = 'SU_Learn' + ('/'.join(pathq))
+			img = Image.open(true_path)
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
 				img.thumbnail(output_size)
-				img.save(MEDIA_ROOT + self.prof_pic.path)
+				img.save(true_path)			
 		super().save(*args,**kwargs)
 
 
