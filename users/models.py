@@ -48,7 +48,7 @@ class LearnerProfile(models.Model):
 			path = self.prof_pic.path
 			path_list = path.split('/')
 			pathq = path_list[2] + '/prof_pics/' + path_list[3]
-			true_path = '/SU_Learn/' + pathq
+			true_path = 'SU_Learn/' + pathq
 			img = Image.open(true_path)
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
