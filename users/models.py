@@ -6,6 +6,8 @@ import os
 from django.core.files import File
 from PIL import Image
 from allauth.socialaccount.models import SocialAccount
+import os.path
+
 
 
 # Create your models here.
@@ -40,9 +42,10 @@ class LearnerProfile(models.Model):
 
 
 	def save(self,*args,**kwargs):
-		print(self.prof_pic)
+		print(self.prof_pic)		
 		if self.prof_pic:
-			img = Image.open(self.prof_pic.path)
+			abs_path = os.path.abspath(self.prof_pic.path)
+			img = Image.open(abs_path)
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
 				img.thumbnail(output_size)
@@ -88,7 +91,8 @@ class CreatorProfile(models.Model):
 	def save(self,*args,**kwargs):
 		print(self.prof_pic)
 		if self.prof_pic:
-			img = Image.open(self.prof_pic.path)
+			abs_path = os.path.abspath(self.prof_pic.path)
+			img = Image.open(abs_path)
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
 				img.thumbnail(output_size)
