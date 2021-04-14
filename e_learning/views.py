@@ -215,6 +215,12 @@ def course_dets(request,slug):
 	creator_followers = creator.creatorprofile.followers.all()
 	user = request.user
 
+	#Follow button only for learners
+
+	if LearnerProfile.objects.filter(user=user).count() != 0:
+		test4 = True
+	else:
+		test4 = False
 
 
  
@@ -231,6 +237,7 @@ def course_dets(request,slug):
 	'test2':test2,
 	'user':user,
 	'test3':test3,
+	'test4':test4,
 	}
 
 	return render(request,'e_learning/course_dets.html',context)

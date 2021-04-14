@@ -32,6 +32,7 @@ def profile(request):
 		name = profile.name
 		DOB = profile.dob
 		dob = DOB.date()
+		dob = dob.strftime('%d/%m/%Y')
 		city = profile.city 
 		state = profile.state
 		date_of_joining = profile.date_of_joining
@@ -99,6 +100,7 @@ def profile(request):
 		name = profile.name
 		DOB = profile.dob
 		dob = DOB.date()
+		dob = dob.strftime('%d/%m/%Y')
 		city = profile.city
 		state = profile.state
 		date_of_joining = profile.date_of_joining
