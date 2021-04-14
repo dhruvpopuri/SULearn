@@ -117,12 +117,12 @@
             {% endfor %}
             <br /><br /><br />
             {% if test == True %}
-            <h2>ADD MODULE</h2>
-            <form method="post">
-              {% csrf_token %}
-              {{ form|crispy }}
-              <button type="submit">ADD MODULE</button>
-            </form>
+              <h2>ADD MODULE</h2>
+              <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit">ADD MODULE</button>
+              </form>
             {% endif %}
           {% else %}
             {% if test == True %}

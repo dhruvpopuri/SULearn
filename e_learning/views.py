@@ -180,7 +180,7 @@ def course_dets(request,slug):
 		for review in reviews:
 			author = review.author
 			author_list.append(author)
-			
+			 
 		if request.user in author_list:
 			test = True
 		else:
