@@ -50,12 +50,6 @@ class LearnerProfile(models.Model):
 		super().save(*args,**kwargs)
 
 
-
-
-
-
-
-
 	def get_absolute_url(self):
 		return reverse('profile')
 
