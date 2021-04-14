@@ -95,11 +95,12 @@ class CreatorProfile(models.Model):
 	def save(self,*args,**kwargs):
 		print(self.prof_pic)
 		if self.prof_pic:
-			img = Image.open(MEDIA_ROOT + self.prof_pic.path)
+			super().save(*args,**kwargs)
+			img = Image.open(self.prof_pic.path)
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
 				img.thumbnail(output_size)
-				img.save(MEDIA_ROOT + self.prof_pic.path)
+				img.save(self.prof_pic.path)
 		super().save(*args,**kwargs)
 
 
