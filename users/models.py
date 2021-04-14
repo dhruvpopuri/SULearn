@@ -44,7 +44,7 @@ class LearnerProfile(models.Model):
 	def save(self,*args,**kwargs):
 		print(self.prof_pic)		
 		if self.prof_pic:
-			img = Image.open(os.path.abs_path(self.prof_pic))
+			img = Image.open(os.path.abspath(self.prof_pic.path))
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
 				img.thumbnail(output_size)
@@ -90,7 +90,7 @@ class CreatorProfile(models.Model):
 	def save(self,*args,**kwargs):
 		print(self.prof_pic)
 		if self.prof_pic:
-			img = Image.open(os.path.abspath(self.prof_pic))
+			img = Image.open(os.path.abspath(self.prof_pic.path))
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
 				img.thumbnail(output_size)
