@@ -24,7 +24,7 @@ class CreatorUserUpdateForm(forms.ModelForm):
 		fields = ['username','email']
 
 class CreatorProfileUpdateForm(forms.ModelForm):
-	prof_pic = forms.ImageField(required=False)
+
 
 	class Meta:
 		model = CreatorProfile
@@ -38,7 +38,6 @@ class LearnerUserUpdateForm(forms.ModelForm):
 		fields = ['username','email']
 
 class LearnerProfileUpdateForm(forms.ModelForm):
-	prof_pic = forms.ImageField(required=False)
 
 	class Meta:
 		model = CreatorProfile
