@@ -1,0 +1,5 @@
+Procfile
+SecretKey.txt
+db.sqlite3
+.env
+SU_Learn/secrets.py
