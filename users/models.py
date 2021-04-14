@@ -7,6 +7,7 @@ from django.core.files import File
 from PIL import Image
 from allauth.socialaccount.models import SocialAccount
 import os.path
+from SU_Learn.settings import BASE_DIR
 
 
 
@@ -44,11 +45,11 @@ class LearnerProfile(models.Model):
 	def save(self,*args,**kwargs):
 		print(self.prof_pic)		
 		if self.prof_pic:
-			img = Image.open(os.path.abspath(self.prof_pic.path))
+			img = Image.open(os.path.join(BASE_DIR,self.prof_pic.path))
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
 				img.thumbnail(output_size)
-				img.save(self.prof_pic.path)
+				img.save(os.path.join(BASE_DIR,self.prof_pic.path))
 		super().save(*args,**kwargs)
 
 
@@ -90,11 +91,11 @@ class CreatorProfile(models.Model):
 	def save(self,*args,**kwargs):
 		print(self.prof_pic)
 		if self.prof_pic:
-			img = Image.open(os.path.abspath(self.prof_pic.path))
+			img = Image.open(os.path.join(BASE_DIR,self.prof_pic.path))
 			if img.height > 300 or img.width > 300:
 				output_size = (300, 300)
 				img.thumbnail(output_size)
-				img.save(self.prof_pic.path)
+				img.save(os.path.join(BASE_DIR,self.prof_pic.path))
 		super().save(*args,**kwargs)
 
 
