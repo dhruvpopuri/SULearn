@@ -286,6 +286,25 @@ def courses(request):
 	creatorprofiles = CreatorProfile.objects.all()
 	common_tags = Courses.tags.most_common()[:5]
 
+	#Special provision for learners
+
+	if LearnerProfile.objects.filter(user=user).count() != 0:
+		learnerprofile = LearnerProfile.objects.get(user=user)
+		users_following = learnerprofile.following.all()
+		print(users_following)
+		context={
+		'courses':courses,
+		'learnerprofile':learnerprofile,
+		'creatorprofiles':creatorprofiles,
+		'user':user,
+		'common_tags':common_tags,
+		'users_following':users_following,
+		}
+
+		return render(request,'e_learning/user_courses_view.html',context)
+
+
+
 
 
 

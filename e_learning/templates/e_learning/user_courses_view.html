@@ -83,20 +83,23 @@
           <br /><br /><br />
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
-          <h2>Other Courses of Creators you Follow</h2>
-          {% for creator in users_following %}
-            <h3>{{ creator.creatorprofile.name }}</h3>
-            {% for courseq in creator.created_by_set.all %}
-                <h2><a href="{% url 'course_details' course.slug %}"> {{ courseq.name }} </a></h2>
-                <small> CREATED BY: {{ course.created_by }}</small>
-                <p>{{ courseq.overview }}</p>
-                <small>{{ courseq.rating }} out of 5</small><br />
-                <p>Tags:</p>
-                {% for tag in course.tags.all %}
-                  <small><button><a href="{% url 'tags' tag %}">{{ tag }}</a></button></small>
-                {% endfor %}
+          {% if users_following %}
+            <h2>Courses by creators you follow</h2>
+            {% for creator in users_following %}
+              {% for courseq in creator.created_by_set.all %}
+                {% if user not in courseq.taken_by.all %}
+                  <h2><a href="{% url 'course_details' courseq.slug %}"> {{ courseq.name }} </a></h2>
+                  <small> CREATED BY: {{ courseq.created_by }}</small>
+                  <p>{{ courseq.overview }}</p>
+                  <small>{{ courseq.rating }} out of 5</small><br />
+                  <p>Tags:</p>
+                  {% for tag in courseq.tags.all %}
+                    <small><button><a href="{% url 'tags' tag %}">{{ tag }}</a></button></small>
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
             {% endfor %}
-          {% endfor %}
+          {% endif %}
 
           <h2>ALL COURSES</h2>
           {% for course in courses %}
