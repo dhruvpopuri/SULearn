@@ -42,7 +42,7 @@
             <input placeholder="Search..." name="search">
             <button type="submit">Search</button>
           </form>
-          <li><a href="{% url 'courses' %}">All Courses</a></li>
+          <li><a href="{% url 'courses' 1 %}">All Courses</a></li>
           <li><a href="{% url 'CreateCourse' %}">Create a Course</a></li>
           <li><a href="http://su-learn.herokuapp.com/accounts/logout">Logout</a></li>
         </ul>
@@ -107,7 +107,7 @@
           <small>Rating:{{ course.rating }}</small>
         {% endfor %}
       </div>
-      <h3>Followers:{{ follower_count }}</h3>
+      <h3><a href="{% url 'followers' %}">Followers</a>:{{ follower_count }}</h3>
     </div>
   </section>
   <!--/ Faculity member-->

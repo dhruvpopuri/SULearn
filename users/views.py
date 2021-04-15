@@ -13,7 +13,21 @@ from e_learning.models import Courses
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
 from e_learning.models import Modules
+from django.contrib.auth.decorators import user_passes_test
 # Create your views here.
+
+def is_learner(user):
+	if LearnerProfile.objects.filter(user=user).count() != 0:
+		return True
+	else:
+		return False
+
+def is_creator(user):
+	if CreatorProfile.objects.filter(user=user).count() != 0:
+		return True
+	else:	
+		return False
+
 
 @login_required
 def profile(request):
@@ -129,6 +143,7 @@ def profile(request):
 		#Followers Count
 		follower_count = user.creatorprofile.followers.count()
 
+
 		context = {
 		'profile':profile,
 		#'name':name,
@@ -203,8 +218,8 @@ def register_learner(request,**kwargs):
 	return render(request,'users/registration_page.html',context)
 
 
-
-@login_required
+@user_passes_test(is_creator)
+@login_required()
 def CreatorUpdate(request):
 	user = request.user
 	creatorprofiles = CreatorProfile.objects.all()
@@ -232,8 +247,8 @@ def CreatorUpdate(request):
 
 	return render(request,'users/creator_update.html',context)
 
-
-@login_required
+@user_passes_test(is_learner)
+@login_required()
 def LearnerUpdate(request):
 	user = request.user
 	creatorprofiles = CreatorProfile.objects.all()
@@ -262,3 +277,33 @@ def LearnerUpdate(request):
 	return render(request,'users/creator_update.html',context)
 
 
+@user_passes_test(is_creator)
+@login_required()
+def FollowersList(request):
+	user = request.user
+	creatorprofile = CreatorProfile.objects.get(user=user)
+	followers = creatorprofile.followers.all()
+
+	context={
+	'followers':followers,
+
+	}
+
+	return render(request,'users/followers.html',context)
+
+
+
+
+@user_passes_test(is_learner)
+@login_required()
+def FollowingList(request):
+	user = request.user
+	learnerprofile = LearnerProfile.objects.get(user=user)
+	following = learnerprofile.following.all()
+
+	context={
+	'following':following,
+
+	}
+
+	return render(request,'users/following.html',context)

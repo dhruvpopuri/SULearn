@@ -45,6 +45,10 @@
           {% if testx == True %}
             <li><a href="{% url 'CreateCourse' %}">Create a Course</a></li>
           {% endif %}
+          {% if learnere == True %}
+            <li><a href="{% url 'coursefollowing' 1 %}">Courses of Users you follow</a></li>
+          {% endif %}
+          
           <li><a href="{% url 'profile' %}">My Profile</a></li>
           <li><a href="http://su-learn.herokuapp.com/accounts/logout/" data-toggle="modal">Log Out</a></li>
         </ul>
@@ -77,27 +81,42 @@
     <div class="container">
       <div class="row">
         <div class="header-section text-center">
-          <b>ALL COURSES</b>
+          <b>ALL COURSES Page:{{ num_current }}</b>
           <hr class="bottom-line">
           <h2>MOST COMMON TAGS</h2>
           {% for tag in common_tags %}
-            <button><a href="{% url 'tags' tag %}">{{ tag }}</a></button>
+            <button><a href="{% url 'tags' tag 1 %}">{{ tag }}</a></button>
           {% endfor %}
           <br /><br /><br />
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
           <h2>ALL COURSES</h2>
-          {% for course in courses %}
+         <!--- {% for course in courses %}
             <h2><a href="{% url 'course_details' course.slug %}"> {{ course.name }} </a></h2>
             <small> CREATED BY: {{ course.created_by }}</small>
             <p>{{ course.overview }}</p>
             <small>{{ course.rating }} out of 5</small><br />
             <p>Tags:</p>
             {% for tag in course.tags.all %}
-              <small><button><a href="{% url 'tags' tag %}">{{ tag }}</a></button></small>
+              <small><button><a href="{% url 'tags' tag 1 %}">{{ tag }}</a></button></small>
             {% endfor %}
-          {% endfor %}
+          {% endfor %} --->
+          {% for course in page_objects %}
+            <h2><a href="{% url 'course_details' course.slug %}"> {{ course.name }} </a></h2>
+            <small> CREATED BY: {{ course.created_by }}</small>
+            <p>{{ course.overview }}</p>
+            <small>{{ course.rating }} out of 5</small><br />
+            <p>Tags:</p>
+            {% for tag in course.tags.all %}
+              <small><button><a href="{% url 'tags' tag 1 %}">{{ tag }}</a></button></small>
+            {% endfor %}
+          {% endfor %} 
 
+            <br /><br /><br /><br />
+            <h4><small>Pages:</small></h4>
+            {% for num in paginator.page_range %}
+              <small><button><a href="{% url 'courses' num %}"> {{ num }} </a></button></small>
+            {% endfor %}
         </div>
       </div>
     </div>

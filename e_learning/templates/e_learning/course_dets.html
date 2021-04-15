@@ -38,7 +38,7 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{% url 'courses' %}">Courses</a></li>
+          <li><a href="{% url 'courses' 1 %}">Courses</a></li>
           <li><a href="{% url 'profile' %}">My Profile</a></li>
           <li><a href="http://su-learn.herokuapp.com/accounts/logout/" data-toggle="modal">Log Out</a></li>
         </ul>
@@ -103,7 +103,7 @@
           {% if modules %}
             {% for module in modules %}
               <h2><a href="{% url 'module' slug module.pk %}"> {{ module.module_name }} </a></h2>
-              {% if test == False %}
+              {% if test5 == True %}
                 <form method="post">
                   {% csrf_token %}
                   {% if user in module.completed_by.all %}
@@ -144,14 +144,13 @@
           {% endif %}
           <br />
 
-          {% if test == False %}
-
-            <form method="post">
-              <h3>WRITE A REVIEW</h3>
-              {% csrf_token %}
-              {{ review_form|crispy }}
-              <button type="submit" name="review">Submit</button>
-            </form>
+          <h3>WRITE A REVIEW</h3>
+          {% if test == False and test5 == True and test6 == True %}
+              <form method="post">
+                {% csrf_token %}
+                {{ review_form|crispy }}
+                <button type="submit" name="review">Submit</button>
+              </form>
 
           {% endif %}
 

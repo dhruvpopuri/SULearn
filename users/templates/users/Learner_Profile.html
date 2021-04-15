@@ -37,7 +37,8 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{% url 'courses' %}">Courses</a></li>
+          <li><a href="{% url 'coursefollowing' 1 %}">Courses of Users you follow</a></li>
+          <li><a href="{% url 'courses' 1 %}">All Courses</a></li>
           <li><a href="http://su-learn.herokuapp.com/accounts/logout">Logout</a></li>
         </ul>
       </div>
@@ -107,7 +108,7 @@
           <small>Created By:{{ course.created_by }}</small>
         {% endfor %}
         <br /><br />
-        <h4>FOLLOWING:{{ following_count }}</h4>
+        <h4><a href="{% url 'following' %}">FOLLOWING</a>:{{ following_count }}</h4>
       </div>
     </div>
   </section>

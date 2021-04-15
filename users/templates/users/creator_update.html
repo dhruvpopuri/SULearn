@@ -38,7 +38,7 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{% url 'courses' %}">Courses</a></li>
+          <li><a href="{% url 'courses' 1 %}">Courses</a></li>
           {% if user in creatorprofiles %}
             <li><a href="{% url 'mycourses' %}">My courses</a></li>
           {% endif %}

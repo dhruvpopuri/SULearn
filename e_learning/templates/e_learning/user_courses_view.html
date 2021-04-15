@@ -42,6 +42,7 @@
             <input placeholder="Search..." name="search">
             <button type="submit">Search</button>
           </form>
+          <li><a href="{% url 'courses' 1 %}">All Courses</a></li>
           <li><a href="{% url 'profile' %}">My Profile</a></li>
           <li><a href="http://su-learn.herokuapp.com/accounts/logout/" data-toggle="modal">Log Out</a></li>
         </ul>
@@ -74,19 +75,16 @@
     <div class="container">
       <div class="row">
         <div class="header-section text-center">
-          <b>ALL COURSES</b>
+          <b>Courses of creators you follow</b>
           <hr class="bottom-line">
-          <h2>MOST COMMON TAGS</h2>
-          {% for tag in common_tags %}
-            <button><a href="{% url 'tags' tag %}">{{ tag }}</a></button>
-          {% endfor %}
           <br /><br /><br />
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
           {% if users_following %}
             <h2>Courses by creators you follow</h2>
-            {% for creator in users_following %}
-              {% for courseq in creator.created_by_set.all %}
+            <!--{% for creator in users_following %}-->
+              {% for courseq in page_objects %}
+
                 {% if user not in courseq.taken_by.all %}
                   <h2><a href="{% url 'course_details' courseq.slug %}"> {{ courseq.name }} </a></h2>
                   <small> CREATED BY: {{ courseq.created_by }}</small>
@@ -94,24 +92,22 @@
                   <small>{{ courseq.rating }} out of 5</small><br />
                   <p>Tags:</p>
                   {% for tag in courseq.tags.all %}
-                    <small><button><a href="{% url 'tags' tag %}">{{ tag }}</a></button></small>
+                    <small><button><a href="{% url 'tags' tag 1 %}">{{ tag }}</a></button></small>
                   {% endfor %}
+                {% else %}
+                <h2>You are already enrolled in all their courses</h2>
                 {% endif %}
               {% endfor %}
+              <br /><br /><br />
+              <small>Pages:</small>
+            {% for num in paginator.page_range %}
+              <small><button><a href="{% url 'coursefollowing' num %}"> {{ num }} </a></button></small>
             {% endfor %}
-          {% endif %}
+            <!--{% endfor %}-->
 
-          <h2>ALL COURSES</h2>
-          {% for course in courses %}
-            <h2><a href="{% url 'course_details' course.slug %}"> {{ course.name }} </a></h2>
-            <small> CREATED BY: {{ course.created_by }}</small>
-            <p>{{ course.overview }}</p>
-            <small>{{ course.rating }} out of 5</small><br />
-            <p>Tags:</p>
-            {% for tag in course.tags.all %}
-              <small><button><a href="{% url 'tags' tag %}">{{ tag }}</a></button></small>
-            {% endfor %}
-          {% endfor %}
+          {% else %}
+          <h2>You don't follow anyone</h2>
+          {% endif %}
 
         </div>
       </div>

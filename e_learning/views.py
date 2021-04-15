@@ -4,12 +4,26 @@ from .forms import CourseCreateForm,ModuleCreateForm,VideoAddForm,CourseReviewFo
 from django.template.defaultfilters import slugify
 from .models import *
 from users.models import *
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.generic import UpdateView,DeleteView
 from taggit.models import Tag
 from django.core.mail import send_mail
+from django.core.paginator import Paginator,EmptyPage
 
 # Create your views here.
+
+def is_learner(user):
+	if LearnerProfile.objects.filter(user=user).count() != 0:
+		return True
+	else:
+		return False
+
+def is_creator(user):
+	if CreatorProfile.objects.filter(user=user).count() != 0:
+		return True
+	else:	
+		return False
+
 
 def home(request):
 	user = request.user
@@ -23,14 +37,15 @@ def home(request):
 def creators(request):
 	return render(request,'e_learning/Creator_home.html')
 
-
-@login_required
+@user_passes_test(is_creator)
+@login_required()
 def CreateCourse(request):
 	
+	user = request.user
 
 
 
-	if request.method == "POST":
+	if request.method == "POST" and CreatorProfile.objects.filter(user=user).count() != 0:
 		form = CourseCreateForm(request.POST)
 
 		if form.is_valid():
@@ -63,7 +78,7 @@ def CreateCourse(request):
 
 	return render(request,'e_learning/create_course.html',context)
 
-@login_required
+@login_required()
 def mycourses(request):
 	courses = Courses.objects.filter(created_by=request.user)
 	context = {
@@ -73,7 +88,7 @@ def mycourses(request):
 	return render(request,'e_learning/mycourses.html',context)
 
 
-@login_required
+@login_required()
 def course_dets(request,slug):
 	course = Courses.objects.get(slug=slug)
 	slug = slug
@@ -81,7 +96,7 @@ def course_dets(request,slug):
 	pk = course.pk
 	creator = course.created_by
 	#ENROLLMENT
-	if f'enroll{pk}' in request.POST:
+	if f'enroll{pk}' in request.POST and LearnerProfile.objects.filter(user=request.user).count() != 0:
 		user = request.user
 		if user not in course.taken_by.all():
 			course.taken_by.add(user)
@@ -95,7 +110,7 @@ def course_dets(request,slug):
 	for module in modules:
 		pk = module.pk
 		user = request.user
-		if f'{pk}' in request.POST:
+		if f'{pk}' in request.POST and request.user in course.taken_by.all():
 			if user in module.completed_by.all():
 				module.completed_by.remove(user)
 				module.save()
@@ -107,7 +122,7 @@ def course_dets(request,slug):
 				
 
 	#To create module
-	if request.method == "POST":
+	if request.method == "POST" and CreatorProfile.objects.filter(user=request.user).count() != 0:
 		form = ModuleCreateForm(request.POST)
 		if form.is_valid():
 			form.instance.course = course
@@ -133,7 +148,7 @@ def course_dets(request,slug):
 
 	
 
-	if module_completion_status_list.count('False') == 0:
+	if module_completion_status_list.count('False') == 0 and LearnerProfile.objects.filter(user=request.user).count() != 0:
 		review_form = CourseReviewForm()
 
 		if 'review' in request.POST:
@@ -148,7 +163,10 @@ def course_dets(request,slug):
 	else:
 		review_form = None
 
-
+	if module_completion_status_list.count('False') == 0:
+		test7 = True
+	else:
+		test7 = False
 
 	#COURSE RATING
 	reviews_list = course.reviews_set.all()
@@ -188,7 +206,7 @@ def course_dets(request,slug):
 
 
 	#Allowing users to follow you
-	if 'follow' in request.POST:
+	if 'follow' in request.POST and LearnerProfile.objects.filter(user=user).count() != 0:
 		creator = course.created_by
 		user = request.user
 		if user not in creator.creatorprofile.followers.all():
@@ -223,6 +241,17 @@ def course_dets(request,slug):
 		test4 = False
 
 
+	#Frontend check for ability to complete a module
+	if request.user in course.taken_by.all():
+		test5 = True
+	else:
+		test5 = False
+
+	if request.user in course.completed_by.all():
+		test6 = True
+	else:
+		test6 = False
+
  
 
 	context = {
@@ -238,6 +267,8 @@ def course_dets(request,slug):
 	'user':user,
 	'test3':test3,
 	'test4':test4,
+	'test5':test5,
+	'test6':test6,
 	}
 
 	return render(request,'e_learning/course_dets.html',context)
@@ -247,7 +278,7 @@ def course_dets(request,slug):
 def module(request,**kwargs): #This is the view for a single module.A detail page for a specific module you could say. #Better to use kwargs here since we have multiple slugs.Then while calling the kwarg we can specify the slug.
 	module = Modules.objects.get(pk=kwargs['pk'])
 	course = Courses.objects.get(slug=kwargs['slug'])
-	videos = module.module_vids.all()
+	videos = module.module_vids.all() 
 	slug = kwargs['slug']
 	pk = kwargs['pk']
 	name = course.name
@@ -286,7 +317,7 @@ def module(request,**kwargs): #This is the view for a single module.A detail pag
 
 	return render(request,'e_learning/module_dets.html',context)
 
-def courses(request):
+def courses(request,page_num):
 	courses = Courses.objects.all()
 	user = request.user
 	learnerprofiles = LearnerProfile.objects.all()
@@ -295,23 +326,53 @@ def courses(request):
 
 	#Special provision for learners
 
-	if LearnerProfile.objects.filter(user=user).count() != 0:
-		learnerprofile = LearnerProfile.objects.get(user=user)
-		users_following = learnerprofile.following.all()
-		print(users_following)
-		context={
-		'courses':courses,
-		'learnerprofile':learnerprofile,
-		'creatorprofiles':creatorprofiles,
-		'user':user,
-		'common_tags':common_tags,
-		'users_following':users_following,
-		}
+	#if LearnerProfile.objects.filter(user=user).count() != 0:
+		#learnerprofile = LearnerProfile.objects.get(user=user)
+		#users_following = learnerprofile.following.all()
+		#courses = Courses.objects.all()
+		#courses_by_following = []
+		#for creator in users_following:
+			#course_of_creator = creator.created_by_set.all()
+			#for course in course_of_creator:
+				#courses_by_following.append(course)
 
-		return render(request,'e_learning/user_courses_view.html',context)
+		#Paginator for courses
+		#paginator = Paginator(courses, 1)
+		#page_objects = paginator.page(page_num)
+
+		#Paginator for courses of followed creators
+		#paginator_follow = Paginator(courses_by_following, 1)
+		#page_following_objects = paginator.page
+		
+		#context={
+		#'courses':courses,
+		#'learnerprofile':learnerprofile,
+		#'creatorprofiles':creatorprofiles,
+		#'user':user,
+		#'common_tags':common_tags,
+		#'users_following':users_following,
+		#'page_objects':page_objects,
+		#'num_current':page_num,
+		#'paginator':paginator,
+		#}
+
+		#return render(request,'e_learning/user_courses_view.html',context)
 
 
+	#PAGINATION
+	paginator = Paginator(courses, 1)
 
+	page_objects = paginator.page(page_num)
+
+
+	if request.method == "POST":
+		page_objects = paginator.page(pk)	
+
+
+		try:
+			paginator.page(pk)
+		except EmptyPage:
+			paginator.page(1)
 
 
 
@@ -319,7 +380,11 @@ def courses(request):
 		testx = True
 	else:
 		testx = False
-	
+
+	if LearnerProfile.objects.filter(user=user).count() != 0:
+		learnere = True
+	else:
+		learnere = False	
 
 
 	context={
@@ -329,6 +394,11 @@ def courses(request):
 	'user':user,
 	'testx':testx,
 	'common_tags':common_tags,
+	'paginator':paginator,
+	'page_objects':page_objects,
+	'num_current':page_num,
+	'learnere':learnere,
+
 
 	}
 
@@ -359,7 +429,7 @@ def search(request):
 
 		sep_tags = sep_post_tags
 
-
+		
 		user = request.user
 		creatorprofiles = CreatorProfile.objects.all()
 
@@ -369,20 +439,77 @@ def search(request):
 		'post_tags':post_tags,
 		'user':user,
 		'creatorprofiles':creatorprofiles,
-		'sep_tags':sep_tags
+		'sep_tags':sep_tags,
 		}
 
 		return render(request,'e_learning/search_results.html',context)
 
-def tags(request,slug):	
+def tags(request,slug,page_num):	
 
 
 	courses = Courses.objects.filter(tags__name__in=[slug])# *********
 
+
+	paginator = Paginator(courses, 1)
+
+	page_objects = paginator.page(page_num)
+
+
+	if request.method == "POST":
+		page_objects = paginator.page(pk)	
+
+
+		try:
+			paginator.page(pk)
+		except EmptyPage:
+			paginator.page(1)
+
+
+
 	context = {
-	'courses':courses
+	'courses':courses,
+	'slug':slug,
+	'paginator':paginator,
+	'page_objects':page_objects,
+	'page_num':page_num,
 	}
 	return render(request,'e_learning/tag.html',context)
+
+
+@login_required()
+@user_passes_test(is_learner)
+def courses_following(request,page_num):
+		user = request.user
+
+		learnerprofile = LearnerProfile.objects.get(user=user)
+		users_following = learnerprofile.following.all()
+		courses = Courses.objects.all()
+		courses_by_following = []
+		for creator in users_following:
+			course_of_creator = creator.created_by_set.all()
+			for course in course_of_creator:
+				courses_by_following.append(course)
+
+		#Paginator for courses
+		paginator = Paginator(courses_by_following, 1)
+		page_objects = paginator.page(page_num)
+
+		context={
+		'courses':courses,
+		'learnerprofile':learnerprofile,
+		#'creatorprofiles':creatorprofiles,
+		'user':user,
+		#'common_tags':common_tags,
+		'users_following':users_following,
+		'page_objects':page_objects,
+		'num_current':page_num,
+		'paginator':paginator,
+		}
+
+		return render(request,'e_learning/user_courses_view.html',context)
+
+	
+
 
 
 

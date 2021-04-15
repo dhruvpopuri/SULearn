@@ -10,6 +10,8 @@ urlpatterns=[
 	path('register/creator/',views.register_creator,name='register_creator'),
 	path('register/learner/',views.register_learner,name='register_learner'),
 	path('login/',views.login,name='login'),
+	path('followers/',views.FollowersList,name='followers'),
+	path('following/',views.FollowingList,name='following'),
 
 
 ] 
