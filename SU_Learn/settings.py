@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-from .secrets import host_password,secret_key,client_id,oauth_key
+from .secrets import host_password,secret_key,client_id,oauth_key,sendgrid_api
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -173,13 +173,19 @@ LOGIN_REDIRECT_URL = 'profile'
 
 TAGGIT_CASE_INSENSITIVE = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'learnerupdate16@gmail.com'
-EMAIL_HOST_PASSWORD = host_password
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_HOST_USER = 'learnerupdate16@gmail.com'
+#EMAIL_HOST_PASSWORD = host_password
+#EMAIL_USE_TLS = True
+#EMAIL_PORT = 587
 
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
+EMAIL_HOST_PASSWORD = sendgrid_api
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 
 CSRF_COOKIE_SECURE = True
