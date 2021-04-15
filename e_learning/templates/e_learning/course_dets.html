@@ -145,7 +145,7 @@
           <br />
 
           <h3>WRITE A REVIEW</h3>
-          {% if test == False and test5 == True and test6 == True %}
+          {% if test == False and test5 == True %}
               <form method="post">
                 {% csrf_token %}
                 {{ review_form|crispy }}
