@@ -78,37 +78,35 @@
           <b>Courses of creators you follow</b>
           <hr class="bottom-line">
           <br /><br /><br />
-        </div>
+        </div> 
         <div class="col-lg-4 col-md-4 col-sm-4">
           {% if users_following %}
             <h2>Courses by creators you follow</h2>
-            <!--{% for creator in users_following %}-->
+            {% if nocourses == True %}
+              <h2> You are already enrolled in all the courses </h2>
+            
+            {% else %}
+
               {% for courseq in page_objects %}
 
-                {% if user not in courseq.taken_by.all %}
-                  <h2><a href="{% url 'course_details' courseq.slug %}"> {{ courseq.name }} </a></h2>
-                  <small> CREATED BY: {{ courseq.created_by }}</small>
-                  <p>{{ courseq.overview }}</p>
-                  <small>{{ courseq.rating }} out of 5</small><br />
-                  <p>Tags:</p>
-                  {% for tag in courseq.tags.all %}
-                    <small><button><a href="{% url 'tags' tag 1 %}">{{ tag }}</a></button></small>
-                  {% endfor %}
-                {% else %}
-                <h2>You are already enrolled in all their courses</h2>
-                {% endif %}
+                <h2><a href="{% url 'course_details' courseq.slug %}"> {{ courseq.name }} </a></h2>
+                <small> CREATED BY: {{ courseq.created_by }}</small>
+                <p>{{ courseq.overview }}</p>
+                <small>{{ courseq.rating }} out of 5</small><br />
+                <p>Tags:</p>
+                {% for tag in courseq.tags.all %}
+                  <small><button><a href="{% url 'tags' tag 1 %}">{{ tag }}</a></button></small>
+                {% endfor %}
               {% endfor %}
-              <br /><br /><br />
-              <small>Pages:</small>
+            {% endif %}
+            <br /><br /><br />
+            <small>Pages:</small>
             {% for num in paginator.page_range %}
               <small><button><a href="{% url 'coursefollowing' num %}"> {{ num }} </a></button></small>
             {% endfor %}
-            <!--{% endfor %}-->
-
           {% else %}
-          <h2>You don't follow anyone</h2>
+            <h2>You don't follow anyone</h2>
           {% endif %}
-
         </div>
       </div>
     </div>

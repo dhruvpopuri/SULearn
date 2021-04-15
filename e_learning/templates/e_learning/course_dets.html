@@ -103,7 +103,7 @@
           {% if modules %}
             {% for module in modules %}
               <h2><a href="{% url 'module' slug module.pk %}"> {{ module.module_name }} </a></h2>
-              {% if test5 == True %}
+              {% if enrolled == True %}
                 <form method="post">
                   {% csrf_token %}
                   {% if user in module.completed_by.all %}
@@ -116,7 +116,7 @@
               {% endif %}
             {% endfor %}
             <br /><br /><br />
-            {% if test == True %}
+            {% if iscreator == True %}
               <h2>ADD MODULE</h2>
               <form method="post">
                 {% csrf_token %}
@@ -125,7 +125,7 @@
               </form>
             {% endif %}
           {% else %}
-            {% if test == True %}
+            {% if iscreator == True %}
             <form method="post">
               {% csrf_token %}
               {{ form|crispy }}
@@ -145,7 +145,7 @@
           <br />
 
           <h3>WRITE A REVIEW</h3>
-          {% if test == False and test5 == True %}
+          {% if enrolled == True and completed == True and reviewed == False %}
               <form method="post">
                 {% csrf_token %}
                 {{ review_form|crispy }}

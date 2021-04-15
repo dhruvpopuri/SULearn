@@ -54,7 +54,7 @@ def profile(request):
 		bio = profile.bio
 		#To get default picture
 		social_account = SocialAccount.objects.get(user=user)
-		#img_url = social_account.extra_data['picture']
+		#img_url = social_account.extra_data['picture'] 
 		email = social_account.extra_data['email']
 		profile.email = email
 		profile.save()
@@ -62,24 +62,24 @@ def profile(request):
 		#Courses taken
 
 		courses_taken = user.courses_set.all()
-		for course in courses_taken:			
-			modules = course.modules.all()
-			course_completion_status = []
-			for module in modules:
-				if user in module.completed_by.all():
-					course_completion_status.append('True')
-				else:
-					course_completion_status.append('False')
+		#for course in courses_taken:			
+			#modules = course.modules.all()
+			#course_completion_status = []
+			#for module in modules:
+				#if user in module.completed_by.all():
+					#course_completion_status.append('True')
+				#else:
+					#course_completion_status.append('False')
 
 
-			if course_completion_status.count('False') == 0:
-				course.completed_by.add(user)
-				course.save()
+			#if course_completion_status.count('False') == 0:
+				#course.completed_by.add(user)
+				#course.save()
 
-			elif course_completion_status.count('False') != 0:
-				if user in course.completed_by.all():
-					course.completed_by.remove(user)
-					course.save()
+			#else:
+				#if user in course.completed_by.all():
+					#course.completed_by.remove(user)
+					#course.save()
 
 		#Following
 		following_count = user.learnerprofile.following.count()

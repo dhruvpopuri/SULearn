@@ -106,7 +106,7 @@ def course_dets(request,slug):
 			course.save()
 
 
-	#Completion status
+	#Completion status of modules
 	for module in modules:
 		pk = module.pk
 		user = request.user
@@ -119,10 +119,31 @@ def course_dets(request,slug):
 				module.save()
 
 
+	course_completion_statusq = []
+	#Completion status of Courses
+	for module in modules:
+		if user in module.completed_by.all():
+			course_completion_statusq.append('True')
+		else:
+			course_completion_statusq.append('False')
+
+
+	if course_completion_statusq.count('False') == 0:
+		user = request.user
+		course.completed_by.add(user)
+		course.save()
+
+	else:
+		user = request.user
+		if user in course.completed_by.all():
+			course.completed_by.remove(user)
+			course.save()
+
+
 				
 
 	#To create module
-	if request.method == "POST" and CreatorProfile.objects.filter(user=request.user).count() != 0:
+	if request.method == "POST" and course.created_by == request.user :
 		form = ModuleCreateForm(request.POST)
 		if form.is_valid():
 			form.instance.course = course
@@ -192,17 +213,18 @@ def course_dets(request,slug):
 	reviews = course.reviews_set.all()
 	author_list = []  
 	if request.user == course.created_by:
-		test = True
+		iscreator = True
 	else:
+		iscreator = False
 
-		for review in reviews:
-			author = review.author
-			author_list.append(author)
+	for review in reviews:
+		author = review.author
+		author_list.append(author)
 			 
-		if request.user in author_list:
-			test = True
-		else:
-			test = False
+	if request.user in author_list:
+		reviewed = True
+	else:
+		reviewed = False
 
 
 	#Allowing users to follow you
@@ -243,14 +265,16 @@ def course_dets(request,slug):
 
 	#Frontend check for ability to complete a module
 	if request.user in course.taken_by.all():
-		test5 = True
+		enrolled = True
 	else:
-		test5 = False
+		enrolled = False
 
 	if request.user in course.completed_by.all():
-		test6 = True
+		completed = True
 	else:
-		test6 = False
+		completed = False
+
+	print(course.completed_by.all())
 
  
 
@@ -261,14 +285,16 @@ def course_dets(request,slug):
 	'slug':slug,
 	'review_form':review_form,
 	'reviews':reviews,
-	'test':test,
+	#'test':test,
 	'creator_followers':creator_followers,
 	'test2':test2,
 	'user':user,
 	'test3':test3,
 	'test4':test4,
-	'test5':test5,
-	'test6':test6,
+	'enrolled':enrolled,
+	'completed':completed,
+	'iscreator':iscreator,
+	'reviewed':reviewed,
 	}
 
 	return render(request,'e_learning/course_dets.html',context)
@@ -483,19 +509,38 @@ def courses_following(request,page_num):
 
 		learnerprofile = LearnerProfile.objects.get(user=user)
 		users_following = learnerprofile.following.all()
-		courses = Courses.objects.all()
+		#courses = Courses.objects.all()
 		courses_by_following = []
 		for creator in users_following:
 			course_of_creator = creator.created_by_set.all()
 			for course in course_of_creator:
-				courses_by_following.append(course)
+				if user not in course.taken_by.all():
+					courses_by_following.append(course)
+
 
 		#Paginator for courses
 		paginator = Paginator(courses_by_following, 1)
 		page_objects = paginator.page(page_num)
 
+		#Check for you are already up to date
+		#up_to_date = []
+		#for course in courses_by_following:
+			#if user in course.taken_by.all():
+				#up_to_date.append(True)
+			#else:
+				#up_to_date.append(False)
+
+		if courses_by_following == []:
+			nocourses = True
+		else:
+			nocourses = False
+
+		print(courses_by_following)
+		print(page_objects)
+
+
 		context={
-		'courses':courses,
+		#'courses':courses,
 		'learnerprofile':learnerprofile,
 		#'creatorprofiles':creatorprofiles,
 		'user':user,
@@ -504,6 +549,7 @@ def courses_following(request,page_num):
 		'page_objects':page_objects,
 		'num_current':page_num,
 		'paginator':paginator,
+		'nocourses':nocourses,
 		}
 
 		return render(request,'e_learning/user_courses_view.html',context)
