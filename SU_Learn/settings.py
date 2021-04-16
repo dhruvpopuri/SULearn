@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
-from .secrets import host_password,secret_key,client_id,oauth_key,sendgrid_api
+from .secrets import host_password,secret_key,client_id,oauth_key,sendgrid_api,database_password
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +27,7 @@ SECRET_KEY = secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['su-learn.herokuapp.com','localhost','127.0.0.1']
+ALLOWED_HOSTS = ['su-learn.herokuapp.com','localhost','127.0.0.1','143.110.252.166']
 
 
 # Application definition
@@ -122,6 +122,17 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+#DATABASES = {
+#    'default': {
+#       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'SU_Learn',
+#        'USER': 'blog_admin',
+#       'PASSWORD': 'database_password',
+#       'HOST': 'localhost',
+#        'PORT': '',
+#    }
+#}
 
 
 # Password validation
