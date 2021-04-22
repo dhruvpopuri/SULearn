@@ -9,7 +9,7 @@ from django.views.generic import UpdateView,DeleteView
 from taggit.models import Tag
 from django.core.mail import send_mail
 from django.core.paginator import Paginator,EmptyPage
-
+from django.db.models import Q
 # Create your views here.
 
 def is_learner(user):
@@ -276,6 +276,12 @@ def course_dets(request,slug):
 
 	print(course.completed_by.all())
 
+	#To make it such that creator can't see enroll button for other courses
+	if CreatorProfile.objects.filter(user=user).count() != 0:
+		a_creator = True
+	else:
+		a_creator = False
+
  
 
 	context = {
@@ -444,16 +450,17 @@ def learners(request):
 def search(request):
 	if request.method == "POST":
 		data = request.POST.get('search')
-		post_names = Courses.objects.filter(name__contains=data)
+		post_names = Courses.objects.filter(name__contains=data)#Higher efficiency
 		post_tags = Courses.objects.filter(tags__name__contains=data)
-		sep_post_tags = []
+		sep_tags = post_names.union(post_tags)
 
-		for course in post_tags:
-			if course not in post_names:
-				sep_post_tags.append(course)
+		#for course in post_tags:
+			#if course not in post_names:
+				#sep_post_tags.append(course)
 
 
-		sep_tags = sep_post_tags
+		#sep_tags = sep_post_tags
+
 
 		
 		user = request.user
@@ -462,7 +469,7 @@ def search(request):
 
 		context={
 		'post_names':post_names,
-		'post_tags':post_tags,
+		#'post_tags':post_tags,
 		'user':user,
 		'creatorprofiles':creatorprofiles,
 		'sep_tags':sep_tags,

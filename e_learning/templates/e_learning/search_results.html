@@ -79,7 +79,7 @@
           <hr class="bottom-line">
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
-            {% if post_names or sep_tags %}
+        <!--{% if post_names or sep_tags %}
               {% if post_names %}
                 {% for course in post_names %}
                   <h2><a href="{% url 'course_details' course.slug %}"> {{ course.name }} </a></h2>
@@ -91,26 +91,26 @@
                     <small><button>{{ tag }}</button></small>
                   {% endfor %}
                 {% endfor %}
-              {% endif %}
-              {% if sep_tags %}
-                {% for course in sep_tags %}
-                  <h2><a href="{% url 'course_details' course.slug %}"> {{ course.name }} </a></h2>
-                  <small> CREATED BY: {{ course.created_by }}</small>
-                  <p>{{ course.overview }}</p>
-                  <small>{{ course.rating }} out of 5</small><br />
-                  <p>Tags:</p>
-                  {% for tag in course.tags.all %}
-                    <small><button>{{ tag }}</button></small>
-                  {% endfor %}
+              {% endif %}-->
+            {% if sep_tags %}
+              {% for course in sep_tags %}
+                <h2><a href="{% url 'course_details' course.slug %}"> {{ course.name }} </a></h2>
+                <small> CREATED BY: {{ course.created_by }}</small>
+                <p>{{ course.overview }}</p>
+                <small>{{ course.rating }} out of 5</small><br />
+                <p>Tags:</p>
+                {% for tag in course.tags.all %}
+                  <small><button>{{ tag }}</button></small>
                 {% endfor %}
-              {% endif %}
-            
-            
-            {% else %}
-              
-              <p><b>NO RESULTS FOUND!</b></p>
-            
+              {% endfor %}
             {% endif %}
+            
+            
+          {% else %}
+              
+            <p><b>NO RESULTS FOUND!</b></p>
+            
+          {% endif %}
 
 
 
